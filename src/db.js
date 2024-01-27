@@ -3,7 +3,7 @@ const { Sequelize } = require("sequelize");
 
 const fs = require("fs");
 const path = require("path");
-const { DB_USER, DB_PASSWORD, DB_HOST, DB_RENDER } = process.env;
+const { DB_USER, DB_PASSWORD, DB_HOST, POSTGRES_URL } = process.env;
 
 // //! este sequelize es para local...
 
@@ -17,7 +17,7 @@ const { DB_USER, DB_PASSWORD, DB_HOST, DB_RENDER } = process.env;
 
 //! este sequelize es para RENDERIZADO... DEPLOY DB en render.s.
 
-const sequelize = new Sequelize(DB_RENDER, {
+const sequelize = new Sequelize(POSTGRES_URL, {
   logging: false,
   native: false,
   dialectOptions: {
