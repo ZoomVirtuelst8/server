@@ -21,7 +21,7 @@ const sequelize = new Sequelize(POSTGRES_URL, {
   logging: false,
   native: false,
   dialectOptions: {
-    ssl: true, // Deshabilitar la conexión SSL/TLS
+    ssl: false, // Deshabilitar la conexión SSL/TLS
   },
 });
 
