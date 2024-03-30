@@ -6,7 +6,7 @@ const {
   getAllUserName,
   getUserNameById,
   updateUserName,
-  deleteUserName
+  deleteUserName,
 } = require("../../controller/controllerRegistros/cUserName.js");
 // asasfgdfgsdgh
 const { verifyJWT } = require("../../helper/jwtHelper.js");
