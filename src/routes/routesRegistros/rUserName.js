@@ -8,6 +8,7 @@ const {
   updateUserName,
   deleteUserName
 } = require("../../controller/controllerRegistros/cUserName.js");
+// asas
 const { verifyJWT } = require("../../helper/jwtHelper.js");
 
 router.post("/", verifyJWT, async (req, res) => {
