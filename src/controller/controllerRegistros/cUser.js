@@ -5,7 +5,7 @@ const {
   Porcentaje,
   Ubicacion,
 } = require("../../db.js");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const postUser = async (user) => {
   try {
@@ -20,7 +20,8 @@ const postUser = async (user) => {
       if (existe) {
         throw Error("Nombre de usuario ya registrado");
       }
-      const hashPassword = await bcrypt.hash(user.password, 10);
+      const salt = await bcrypt.genSalt(10); // Ajusta el número de rondas si es necesario
+      const hashPassword = await bcrypt.hash(user.password, salt);
 
       const [newUser, created] = await User.findOrCreate({
         where: {
@@ -69,7 +70,8 @@ const postUserAuth = async (user) => {
       throw Error("Nombre de usuario ya registrado");
     }
       user.admin = false
-    const hashPassword = await bcrypt.hash(user.password, 10);
+      const salt = await bcrypt.genSalt(10); // Ajusta el número de rondas si es necesario
+      const hashPassword = await bcrypt.hash(user.password, salt);
 
     const [newUser, created] = await User.findOrCreate({
       where: {
