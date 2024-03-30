@@ -4,7 +4,7 @@
   "description": "Server Zoom Virtuel",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./src/index.js"
+    "start": "nodemon ./index.js"
   },
   "author": "Wilson Sanchez",
   "license": "ISC",
