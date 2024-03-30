@@ -7,23 +7,24 @@ const { DB_USER, DB_PASSWORD, DB_HOST, POSTGRES_URL } = process.env;
 
 // //! este sequelize es para local...
 
-// const sequelize = new Sequelize(
-//   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/zoomVirtuel`,
-//   {
-//     logging: false,
-//     native: false,
-//   }
-// );
+const sequelize = new Sequelize(
+  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/zoomVirtuel`,
+  {
+    logging: false,
+    native: false,
+  }
+);
 
 //! este sequelize es para RENDERIZADO... DEPLOY DB en render.s.
 
-const sequelize = new Sequelize(POSTGRES_URL, {
-  logging: false,
-  native: false,
-  dialectOptions: {
-    ssl: false, // Deshabilitar la conexión SSL/TLS
-  },
-});
+// const sequelize = new Sequelize(POSTGRES_URL, {
+//   logging: false,
+//   native: false,
+//   dialectOptions: {
+//     dialectModule: require('pg'),
+//     ssl: true, // Deshabilitar la conexión SSL/TLS
+//   },
+// });
 
 const basename = path.basename(__filename);
 
@@ -119,7 +120,6 @@ Adultwork.belongsTo(Quincena, { as: "q_adult", foreignKey: "quincena" });
 //? relation of userName and adultwork
 UserName.hasMany(Adultwork, { as: "corte_adult", foreignKey: "userNameId" });
 Adultwork.belongsTo(UserName, { as: "corte_adult", foreignKey: "userNameId" });
-
 
 //? ********************// A M A T E U R \\  ********************
 //? relation of fortnight and amateur

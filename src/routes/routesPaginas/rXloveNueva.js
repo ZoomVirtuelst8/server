@@ -5,8 +5,9 @@ const {
   pxln,
   gxln,
 } = require("../../controller/controllerPaginas/cXloveNueva.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const coxln = req.body.coxln;
   try {
     const ncoxln = await pxln(coxln);
@@ -22,7 +23,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
   try {
     const coxln = await gxln();
     if (coxln[0]) {

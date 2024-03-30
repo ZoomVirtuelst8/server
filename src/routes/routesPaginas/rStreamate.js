@@ -6,8 +6,9 @@ const {
   getStreamate,
   deleteStreamate,
 } = require("../../controller/controllerPaginas/cStreamate.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const streamate = req.body;
   try {
     const newStreamate = await postStreamate(streamate);
@@ -17,7 +18,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
   try {
     const allStreamate = await getStreamate();
     return res.status(200).json(allStreamate);
@@ -26,7 +27,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   try {
     const deleteStreamates = await deleteStreamate(id);

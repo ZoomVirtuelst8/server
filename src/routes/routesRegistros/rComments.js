@@ -8,8 +8,9 @@ const {
   updateComment,
   deleteComment,
 } = require("../../controller/controllerRegistros/cComentario.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const comment = req.body;
   try {
     const nComment = await postComment(comment);
@@ -19,7 +20,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
   try {
     const comments = await getAllComment();
     return res.status(200).json(comments);
@@ -28,7 +29,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   try {
     const comment = await getCommentById(id);
@@ -38,7 +39,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   const nComment = req.body.nComment;
   try {
@@ -49,7 +50,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   try {
     const deleteComments = await deleteComment(id);

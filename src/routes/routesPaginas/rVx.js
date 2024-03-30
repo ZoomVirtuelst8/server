@@ -2,8 +2,9 @@ const { Router } = require("express");
 const router = Router();
 
 const { pvx, gvx } = require("../../controller/controllerPaginas/cVx.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const covx = req.body.covx;
   try {
     const ncovx = await pvx(covx);
@@ -19,7 +20,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
   try {
     const covx = await gvx();
     if (covx[0]) {

@@ -2,8 +2,9 @@ const { Router } = require("express");
 const router = Router();
 
 const { psk, gsk } = require("../../controller/controllerPaginas/cSkype.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const cosk = req.body.cosk;
   try {
     const ncosk = await psk(cosk);
@@ -19,7 +20,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
   try {
     const cosk = await gsk();
     if (cosk[0]) {

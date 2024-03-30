@@ -5,8 +5,9 @@ const {
   pst,
   gst,
 } = require("../../controller/controllerPaginas/cStripchat.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const cost = req.body.cost;
   try {
     const ncost = await pst(cost);
@@ -22,7 +23,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
   try {
     const cost = await gst();
     if (cost[0]) {

@@ -2,8 +2,9 @@ const { Router } = require("express");
 const router = Router();
 
 const { pse, gse } = require("../../controller/controllerPaginas/cSender.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const cose = req.body.cose;
   try {
     const ncose = await pse(cose);
@@ -19,7 +20,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
   try {
     const cose = await gse();
     if (cose[0]) {

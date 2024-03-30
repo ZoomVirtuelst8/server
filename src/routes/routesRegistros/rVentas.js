@@ -8,9 +8,11 @@ const {
   updateVentas,
   deleteVenta,
 } = require("../../controller/controllerRegistros/cVentas.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const venta = req.body;
+  console.log(venta)
   try {
     const nVenta = await postVentas(venta);
     return res.status(200).json(nVenta);
@@ -19,7 +21,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
   try {
     const allVentas = await getAllVentas();
     return res.status(200).json(allVentas);
@@ -28,7 +30,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   try {
     const venta = await getVentaById(id);
@@ -38,7 +40,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   const nVenta = req.body.nVenta;
   try {
@@ -49,7 +51,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   try {
     const venta = await deleteVenta(id);

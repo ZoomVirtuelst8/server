@@ -60,15 +60,19 @@ const searchUserByFortnight = async (ids, id) => {
 
     let quincenaAnterior;
     let nombreQuincena;
-    if (moneda?.nombre?.endsWith("2")) {
+    const nombreQuincenas = moneda?.nombre;
+    const partes = nombreQuincenas.split("-");
+    const mes = partes[0]; // "marzo"
+    const parte = partes[1]; // "1"
+    const year = partes[2]; // "24";
+    if (parte === '2') {
       // Si moneda.nombre termina en "2", busca la quincena con "1" al final.
       quincenaAnterior = quincenas?.find((quincena) => {
-        nombreQuincena = quincena?.nombre;
-        return nombreQuincena.endsWith("1");
+        nombreQuincena = quincena?.nombre === `${mes}-1-${year}`
+        return nombreQuincena;
       });
     }
-
-    let quincenaId = quincenaAnterior?.id;
+    let quincenaId = quincenaAnterior?.id || null;
 
     //! ↓↓↓↓↓↓↓↓↓↓↓↓↓↓    inicio adultwork   ↓↓↓↓↓↓↓↓↓↓↓↓↓↓
     const adultWork = await Quincena.findOne({
@@ -471,11 +475,7 @@ const searchUserByFortnight = async (ids, id) => {
         {
           model: Rojo,
           as: "q_rojo",
-          attributes: [
-            "id",
-            "userId",
-            "rojo",
-          ],
+          attributes: ["id", "userId", "rojo"],
         },
       ],
     });
@@ -1095,7 +1095,9 @@ const searchUserByFortnight = async (ids, id) => {
     //? sacamos el total de euros
     let totalEuros =
       parseFloat(
-        (final.dirty?.moneda.toLowerCase() === "euro" ? final.dirty?.plata : 0) || 0
+        (final.dirty?.moneda.toLowerCase() === "euro"
+          ? final.dirty?.plata
+          : 0) || 0
       ) +
       parseFloat(final.islive?.euros || 0) +
       parseFloat(final.mondo?.euros || 0) +
@@ -1115,7 +1117,9 @@ const searchUserByFortnight = async (ids, id) => {
       parseFloat(final.cam4?.dolares || 0) +
       parseFloat(final.chaturbate?.dolares || 0) +
       parseFloat(
-        (final.dirty?.moneda.toLowerCase() === "dolar" ? final.dirty?.plata : 0) || 0
+        (final.dirty?.moneda.toLowerCase() === "dolar"
+          ? final.dirty?.plata
+          : 0) || 0
       ) +
       parseFloat(final.myFreeCams?.dolares || 0) +
       parseFloat(final.sakura?.dolares || 0) +
@@ -1152,24 +1156,22 @@ const searchUserByFortnight = async (ids, id) => {
       parseFloat(((totalDolares * porcentajeFinal) / 100) * dolar || 0);
 
     //? sacamos el total de los prestamos
-    const totalPrestamos = parseFloat(
-      final?.prestamoTotal || 0
-    );
+    const totalPrestamos = parseFloat(final?.prestamoTotal || 0);
 
     //? sacamos el total de las ventas de la vitrina
-    const totalVitrina = parseFloat(
-      final?.ventasTotal || 0
-    );
+    const totalVitrina = parseFloat(final?.ventasTotal || 0);
     //? sacamos el rojo
-    const rojox = final?.rojo[0]?.rojo || 0
-
+    const rojox = final?.rojo[0]?.rojo * -1 || 0;
     //? sacamos los intereses
-    const interes = rojox >= 2000000 ? rojox*0.02:rojox*0.05 || 0;
+    const interes = rojox >= 2000000 ? rojox * 0.02 : rojox * 0.05 || 0;
 
     //? sacamos el total final luego de los descuentos
-    const saldo = parseFloat(
-      parseFloat(totalPesos - totalPrestamos - rojox - interes  - totalVitrina).toFixed(2)
-    ) || 0;
+    const saldo =
+      parseFloat(
+        parseFloat(
+          totalPesos - totalPrestamos - rojox - interes - totalVitrina
+        ).toFixed(2)
+      ) || 0;
 
     // Guardar los totales en el modelo
     final.totales = {
@@ -1229,11 +1231,16 @@ const searchAllUserByFortnight = async (id) => {
     });
     let quincenaAnterior;
     let nombreQuincena;
-    if (moneda?.nombre?.endsWith("2")) {
+    const nombreQuincenas = moneda?.nombre;
+    const partes = nombreQuincenas.split("-");
+    const mes = partes[0]; // "marzo"
+    const parte = partes[1]; // "1"
+    const year = partes[2]; // "24";
+    if (parte === '2') {
       // Si moneda.nombre termina en "2", busca la quincena con "1" al final.
       quincenaAnterior = quincenas?.find((quincena) => {
-        nombreQuincena = quincena?.nombre;
-        return nombreQuincena.endsWith("1");
+        nombreQuincena = quincena?.nombre === `${mes}-1-${year}`
+        return nombreQuincena;
       });
     }
     let quincenaId = quincenaAnterior?.id || null;
@@ -1654,11 +1661,7 @@ const searchAllUserByFortnight = async (id) => {
         {
           model: Rojo,
           as: "q_rojo",
-          attributes: [
-            "id",
-            "userId",
-            "rojo",
-          ],
+          attributes: ["id", "userId", "rojo"],
         },
       ],
     });
@@ -1775,28 +1778,28 @@ const searchAllUserByFortnight = async (id) => {
       }
     }
 
-    for (const usuarioKey of Object.keys(resultado.modelos)) {
-      const usuario = resultado.modelos[usuarioKey];
+    for (const usuarioKey of Object.keys(resultado?.modelos)) {
+      const usuario = resultado?.modelos[usuarioKey];
       for (const nombreUsuario of Object.keys(registrosAgrupados)) {
         const registrosUsuario = registrosAgrupados[nombreUsuario];
-        const usuarioEncontrado = usuario.userNamePage.find(
+        const usuarioEncontrado = usuario?.userNamePage?.find(
           (name) =>
-            name.pagina.toLowerCase() === "adultwork" &&
-            name.userName === nombreUsuario
+            name?.pagina?.toLowerCase() === "adultwork" &&
+            name?.userName === nombreUsuario
         );
         if (usuarioEncontrado) {
           // Filtra solo los registros parciales
-          const parciales = registrosUsuario.filter(
+          const parciales = registrosUsuario?.filter(
             (registro) => registro.parcial === true
           );
 
           // Filtra solo los registros cortes
-          const cortes = registrosUsuario.filter(
+          const cortes = registrosUsuario?.filter(
             (registro) => registro.parcial === false
           );
 
           // Encuentra el parcial más reciente
-          const latestParcialRecord = parciales.reduce((latest, registro) => {
+          const latestParcialRecord = parciales?.reduce((latest, registro) => {
             if (
               !latest ||
               new Date(registro.createdAt) > new Date(latest.createdAt)
@@ -1885,14 +1888,14 @@ const searchAllUserByFortnight = async (id) => {
       }
     }
 
-    for (const usuarioKey of Object.keys(resultado.modelos)) {
-      const usuario = resultado.modelos[usuarioKey];
+    for (const usuarioKey of Object.keys(resultado?.modelos)) {
+      const usuario = resultado?.modelos[usuarioKey];
       for (const nombreUsuario of Object.keys(registrosAgrupadosAmateur)) {
         const registrosUsuario = registrosAgrupadosAmateur[nombreUsuario];
-        const usuarioEncontrado = usuario.userNamePage.find(
+        const usuarioEncontrado = usuario?.userNamePage?.find(
           (name) =>
-            name.pagina.toLowerCase() === "amateur" &&
-            name.userName === nombreUsuario
+            name?.pagina?.toLowerCase() === "amateur" &&
+            name?.userName === nombreUsuario
         );
         if (usuarioEncontrado) {
           // Encontrar el registro más reciente utilizando reduce
@@ -1941,14 +1944,14 @@ const searchAllUserByFortnight = async (id) => {
       }
     }
 
-    for (const usuarioKey of Object.keys(resultado.modelos)) {
-      const usuario = resultado.modelos[usuarioKey];
+    for (const usuarioKey of Object.keys(resultado?.modelos)) {
+      const usuario = resultado?.modelos[usuarioKey];
       for (const nombreUsuario of Object.keys(registrosAgrupadosBonga)) {
         const registrosUsuario = registrosAgrupadosBonga[nombreUsuario];
-        const usuarioEncontrado = usuario.userNamePage.find(
+        const usuarioEncontrado = usuario?.userNamePage?.find(
           (name) =>
-            name.pagina.toLowerCase() === "bonga" &&
-            name.userName === nombreUsuario
+            name?.pagina?.toLowerCase() === "bonga" &&
+            name?.userName === nombreUsuario
         );
         if (usuarioEncontrado) {
           const creditosTotales = registrosUsuario.reduce(
@@ -2284,8 +2287,8 @@ const searchAllUserByFortnight = async (id) => {
         const registrosUsuario = registrosAgrupadosMyFreeCams[nombreUsuario];
         const usuarioEncontrado = usuario.userNamePage.find(
           (name) =>
-            name.pagina.toLowerCase() === "myfreecams" &&
-            name.userName === nombreUsuario
+            name?.pagina?.toLowerCase() === "myfreecams" &&
+            name?.userName === nombreUsuario
         );
         if (usuarioEncontrado) {
           const registroMasReciente = registrosUsuario.reduce(
@@ -2574,8 +2577,8 @@ const searchAllUserByFortnight = async (id) => {
         const registrosUsuario = registrosAgrupadosStreamate[nombreUsuario];
         const usuarioEncontrado = usuario.userNamePage.find(
           (name) =>
-            name.pagina.toLowerCase() === "streamate" &&
-            name.userName === nombreUsuario
+            name?.pagina?.toLowerCase() === "streamate" &&
+            name?.userName === nombreUsuario
         );
         if (usuarioEncontrado) {
           const totalDolares = registrosUsuario.reduce(
@@ -2981,11 +2984,11 @@ const searchAllUserByFortnight = async (id) => {
       if (userModel) {
         // Crear la propiedad 'ventas' si aún no existe
         if (!userModel.rojo) {
-          userModel.rojo = '';
+          userModel.rojo = "";
         }
 
         // Agregar la venta al array 'ventas' del modelo
-        userModel.rojo=rojo;
+        userModel.rojo = rojo;
       }
     });
     //!  ↑↑↑↑↑↑↑↑↑↑↑↑   fin rojos   ↑↑↑↑↑↑↑↑↑↑↑↑
@@ -3064,15 +3067,18 @@ const searchAllUserByFortnight = async (id) => {
       );
 
       //? sacamos el rojo
-      const rojox = modelo?.rojo?.rojo || 0;
+      const rojox = modelo?.rojo?.rojo * -1 || 0;
 
       //? sacamos los intereses
-      const interes = rojox >= 2000000?rojox*0.02:rojox*0.05 ||0;
+      const interes = rojox >= 2000000 ? rojox * 0.02 : rojox * 0.05 || 0;
 
       //? sacamos el total final luego de los descuentos
-      const saldo = parseFloat(
-        parseFloat(totalPesos - totalPrestamos - rojox - interes - totalVitrina).toFixed(2)
-      ) || 0;
+      const saldo =
+        parseFloat(
+          parseFloat(
+            totalPesos - totalPrestamos - rojox - interes - totalVitrina
+          ).toFixed(2)
+        ) || 0;
 
       // Guardar los totales en el modelo
       modelo.totales = {
@@ -3096,6 +3102,7 @@ const searchAllUserByFortnight = async (id) => {
     //todo  ↓↓↓↓↓↓↓↓↓↓↓↓↓↓   final  ↓↓↓↓↓↓↓↓↓↓↓↓↓↓
     return resultado;
   } catch (error) {
+    console.log(error);
     throw new Error(
       "Error ocurrio algo en el proceso por favor intente nuevamente o contacte con un programing thanks" +
         error.message

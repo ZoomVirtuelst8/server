@@ -5,8 +5,9 @@ const {
   pch,
   gch,
 } = require("../../controller/controllerPaginas/cChaturbate.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const coch = req.body.coch;
   try {
     const ncoch = await pch(coch);
@@ -22,7 +23,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
   try {
     const coch = await gch();
     if (coch[0]) {

@@ -2,8 +2,9 @@ const { Router } = require("express");
 const router = Router();
 
 const { postMondo } = require("../../controller/controllerPaginas/cMondo.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const mondo = req.body;
   try {
     const newMondo = await postMondo(mondo);

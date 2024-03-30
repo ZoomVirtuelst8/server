@@ -8,24 +8,28 @@ const {
   updatePagina,
   deletePagina,
 } = require("../../controller/controllerRegistros/cPaginas.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const pagina = req.body.pagina;
+  console.log(req.body.pagina)
   try {
     const nPagina = await postPagina(pagina);
-    if (nPagina) {
-      return res.status(200).json(nPagina);
-    } else {
+    console.log(nPagina.Error)
+    if (nPagina.Error) {
       return res
         .status(404)
         .json({ error: "Lo sentimos esa pagina ya fue creada" });
+    }
+    if (nPagina) {
+      return res.status(200).json(nPagina);
     }
   } catch (error) {
     return res.status(500).send(error.message);
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
   try {
     const paginas = await getAllPaginas();
     if (paginas) {
@@ -38,7 +42,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   try {
     const pagina = await getPaginaById(id);
@@ -48,7 +52,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   const nPagina = req.body.nPagina;
   try {
@@ -59,7 +63,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   try {
     const pagina = await deletePagina(id);

@@ -8,8 +8,9 @@ const {
   updatePrestamos,
   deletePrestamo,
 } = require("../../controller/controllerRegistros/cPrestamos.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const prestamo = req.body;
   try {
     const newPrestamo = await postPrestamos(prestamo);
@@ -19,7 +20,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
   try {
     const prestamos = await getAllPrestamos();
     return res.status(200).json(prestamos);
@@ -28,7 +29,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   try {
     const prestamo = await getPrestamoById(id);
@@ -38,7 +39,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   const nPrestamo = req.body;
   try {
@@ -49,7 +50,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   try {
     const prestamo = await deletePrestamo(id);

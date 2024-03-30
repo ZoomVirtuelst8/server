@@ -1,9 +1,10 @@
 const { Router } = require("express");
 const router = Router();
 
-const { getProductoPrecioAndCantidad } = require("../../controller/controllerRegistros/cSearchProducto.js")
+const { getProductoPrecioAndCantidad } = require("../../controller/controllerRegistros/cSearchProducto.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.get("/", async (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
 try {
 const producto = await getProductoPrecioAndCantidad();
 return res.status(200).json(producto);

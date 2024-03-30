@@ -2,8 +2,9 @@ const { Router } = require("express");
 const router = Router();
 
 const { pxl, gxl } = require("../../controller/controllerPaginas/cXlove.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const coxl = req.body.coxl;
   try {
     const ncoxl = await pxl(coxl);
@@ -19,7 +20,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
   try {
     const coxl = await gxl();
     if (coxl[0]) {

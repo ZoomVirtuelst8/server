@@ -5,8 +5,9 @@ const {
   postMoneda,
   getAllMoneda,
 } = require("../../controller/controllerRegistros/cMoneda.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const moneda = req.body;
   try {
     const nMoneda = await postMoneda(moneda);
@@ -16,7 +17,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
   try {
     const moneda = await getAllMoneda();
     return res.status(200).json(moneda);

@@ -4,8 +4,9 @@ const router = Router();
 const {
   postTripeSiete, getTripleSiete,
 } = require("../../controller/controllerPaginas/cTripleSiete.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const tripleSiete = req.body;
   try {
     const newTriplesSete = await postTripeSiete(tripleSiete);
@@ -15,7 +16,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
 try {
 const tripleSiete = await getTripleSiete();
 return res.status(200).json(tripleSiete);

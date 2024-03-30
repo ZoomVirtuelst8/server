@@ -8,8 +8,9 @@ const {
   deleteCompra,
   updateCompras,
 } = require("../../controller/controllerRegistros/cCompras.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const compra = req.body;
   try {
     const nCompra = await postCompras(compra);
@@ -19,7 +20,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
   try {
     const getCompras = await getAllCompras();
     return res.status(200).json(getCompras);
@@ -28,7 +29,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   try {
     const getCompras = await getCompraById(id);
@@ -39,7 +40,7 @@ router.get("/:id", async (req, res) => {
 });
 
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   const nCompra = req.body.nCompra;
   try {
@@ -50,7 +51,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   try {
     const compra = await deleteCompra(id);

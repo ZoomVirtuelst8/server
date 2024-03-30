@@ -3,6 +3,7 @@ const router = Router();
 
 const {
   postUser,
+  postUserAuth,
   getAllUser,
   getAllUserIdName,
   getUserById,
@@ -10,6 +11,7 @@ const {
   updateUser,
   deleteUser,
 } = require("../../controller/controllerRegistros/cUser.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
 router.post("/", async (req, res) => {
   const user = req.body;
@@ -24,11 +26,28 @@ router.post("/", async (req, res) => {
       });
     }
   } catch (error) {
-    return res.status(500).json({ error: "No se pudo registrar el usuario" });
+    return res.status(500).send(error.message);
   }
 });
 
-router.get("/", async (req, res) => {
+router.post("/veirify", verifyJWT,  async (req, res) => {
+  const user = req.body;
+  try {
+    const nUser = await postUserAuth(user);
+    if (nUser) {
+      return res.status(200).json(nUser);
+    } else {
+      return res.status(404).json({
+        error:
+          "No se logro crear el usuario vuelva a intentar o contacte con soporte",
+      });
+    }
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+});
+
+router.get("/", verifyJWT, async (req, res) => {
   try {
     const user = await getAllUser();
     if (user) {
@@ -40,7 +59,7 @@ router.get("/", async (req, res) => {
     return res.status(500).send(error.message);
   }
 });
-router.get("/sencillo", async (req, res) => {
+router.get("/sencillo", verifyJWT, async (req, res) => {
   try {
     const user = await getAllUserIdName();
     if (user) {
@@ -53,7 +72,7 @@ router.get("/sencillo", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", verifyJWT, async (req, res) => {
   try {
     const id = req.params.id;
     const user = await getUserById(id);
@@ -66,7 +85,7 @@ router.get("/:id", async (req, res) => {
     return res.status(500).send(error.message);
   }
 });
-router.get("/check/:id", async (req, res) => {
+router.get("/check/:id", verifyJWT, async (req, res) => {
   try {
     const { id } = req.params;
     const user = await getCheckById(id);
@@ -80,7 +99,7 @@ router.get("/check/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   const editUser = req.body;
   try {
@@ -91,7 +110,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   try {
     const user = await deleteUser(id);

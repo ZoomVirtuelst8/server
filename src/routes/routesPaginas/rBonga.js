@@ -6,8 +6,9 @@ const {
   gbo,
   deleteBonga,
 } = require("../../controller/controllerPaginas/cBonga.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const cobo = req.body.cobo;
   try {
     const ncobo = await pbo(cobo);
@@ -23,7 +24,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
   try {
     const cobo = await gbo();
     if (cobo[0]) {
@@ -36,7 +37,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   try {
     const deleteBongas = await deleteBonga(id);

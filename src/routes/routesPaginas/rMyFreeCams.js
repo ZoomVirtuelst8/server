@@ -4,8 +4,9 @@ const router = Router();
 const {
   postMyFreeCams,
 } = require("../../controller/controllerPaginas/cMyFreeCams.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const myFreeCams = req.body;
   try {
     const newMyFreeCams = await postMyFreeCams(myFreeCams);

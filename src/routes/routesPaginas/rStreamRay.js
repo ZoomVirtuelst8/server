@@ -4,8 +4,9 @@ const router = Router();
 const {
   postStreamRay,
 } = require("../../controller/controllerPaginas/cStreamRay.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const streamRay = req.body;
   try {
     const newStreamRay = await postStreamRay(streamRay);

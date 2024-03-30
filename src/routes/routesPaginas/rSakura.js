@@ -2,8 +2,9 @@ const { Router } = require("express");
 const router = Router();
 
 const { postSakura } = require("../../controller/controllerPaginas/cSakura.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const sakura = req.body;
   try {
     const newSakura = await postSakura(sakura);

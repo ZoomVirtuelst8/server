@@ -1,13 +1,21 @@
 const { Paginas, UserName } = require("../../db.js");
 
 const postPagina = async (pagina) => {
+  console.log(pagina)
   try {
-    const nPagina = await Paginas.findOrCreate({
-      where: {
-        nombrePagina: pagina,
-      },
-    });
-    return nPagina;
+    const existe = await Paginas.findOne({ where: { nombrePagina: pagina } });
+    // console.log(existe)
+    if (existe) {
+      return { Error: "Nombre de pagina ya registrado" };
+    } else {
+      const nPagina = await Paginas.findOrCreate({
+        where: {
+          nombrePagina: pagina,
+        },
+      });
+      console.log(nPagina);
+      return nPagina;
+    }
   } catch (error) {
     throw new Error(
       "Lo sentimos no pudimos agregar la pagina." + error.message
@@ -17,14 +25,14 @@ const postPagina = async (pagina) => {
 
 const getAllPaginas = async () => {
   try {
-    const paginas = await Paginas.findAll(
-      {include: [
+    const paginas = await Paginas.findAll({
+      include: [
         {
           model: UserName,
           as: "userNames",
         },
-      ],}
-    );
+      ],
+    });
     paginas.sort((a, b) => a.nombrePagina.localeCompare(b.nombrePagina));
     return paginas;
   } catch (error) {

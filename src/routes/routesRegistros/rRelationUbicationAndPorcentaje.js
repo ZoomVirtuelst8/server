@@ -4,8 +4,9 @@ const router = Router();
 const {
   relationUbicationAndPorcentaje,
 } = require("../../controller/controllerRegistros/cRelationUbicationAndPorcentaje.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const input = req.body;
   try {
     const relation = await relationUbicationAndPorcentaje(input);

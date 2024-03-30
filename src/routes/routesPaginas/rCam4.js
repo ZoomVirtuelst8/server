@@ -2,8 +2,9 @@ const { Router } = require("express");
 const router = Router();
 
 const { pca, gca } = require("../../controller/controllerPaginas/cCam4.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const coca = req.body.coca;
   try {
     const ncoca = await pca(coca);
@@ -19,7 +20,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
   try {
     const coca = await gca();
     if (coca[0]) {

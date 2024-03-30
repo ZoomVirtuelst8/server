@@ -1,6 +1,7 @@
 const { Ventas, Quincena, Producto } = require("../../db.js");
 
 const postVentas = async (venta) => {
+  console.log(venta)
   try {
     const ventas = [];
     for (const item of venta) {

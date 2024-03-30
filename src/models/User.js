@@ -5,28 +5,13 @@ module.exports = (sequelize) => {
     "User",
     {
       id: {
-        type: DataTypes.STRING,
-        allowNull: false,
         primaryKey: true,
-      },
-      firstName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      lastName: {
-        type: DataTypes.STRING,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         allowNull: false,
       },
       admin: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
-      },
-      image: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      correo: {
-        type: DataTypes.STRING,
         allowNull: false,
       },
       nombre: {
@@ -60,6 +45,14 @@ module.exports = (sequelize) => {
       nacionalidad: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      },
+      session: {
+      type: DataTypes.STRING,
+      allowNull: false,
       },
     },
     {

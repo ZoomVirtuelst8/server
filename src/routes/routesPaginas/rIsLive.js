@@ -2,8 +2,9 @@ const { Router } = require("express");
 const router = Router();
 
 const { pil, gil } = require("../../controller/controllerPaginas/cIsLive.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const coil = req.body.coil;
   try {
     const ncoil = await pil(coil);
@@ -19,7 +20,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
   try {
     const coil = await gil();
     if (coil[0]) {

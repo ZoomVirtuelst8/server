@@ -7,8 +7,9 @@ const {
   gpad,
   deleteCorte,
 } = require("../../controller/controllerPaginas/cAdultwork");
+const { verifyJWT } = require("../../helper/jwtHelper");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const coad = req.body.coad;
   try {
     const necoad = await pad(coad); //enviar al controller
@@ -20,11 +21,12 @@ router.post("/", async (req, res) => {
         .json({ error: "Los registros ya fueron realizados" });
     }
   } catch (error) {
+    console.log(error)
     return res.status(500).json({ error: "Error al guardar los registros: " });
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
   try {
     const coad = await gad();
     if (coad[0]) {
@@ -37,7 +39,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/parcial", async (req, res) => {
+router.post("/parcial", verifyJWT, async (req, res) => {
   const copad = req.body.copad;
   try {
     const ncopad = await ppad(copad);
@@ -51,7 +53,7 @@ router.post("/parcial", async (req, res) => {
   }
 });
 
-router.get("/parcial", async (req, res) => {
+router.get("/parcial", verifyJWT, async (req, res) => {
   try {
     const copad = await gpad();
     if (copad[0]) {
@@ -64,7 +66,7 @@ router.get("/parcial", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   try {
     const deleteCortes = await deleteCorte(id);

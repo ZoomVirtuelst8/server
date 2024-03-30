@@ -8,8 +8,9 @@ const {
   updatePorcentaje,
   deletePorcentaje,
 } = require("../../controller/controllerRegistros/cPorcentaje.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const porcentajes = req.body;
   try {
     const newPorcentaje = await postPorcentaje(porcentajes);
@@ -19,7 +20,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
   try {
     const allPorcentaje = await getAllPorcentaje();
     return res.status(200).json(allPorcentaje);
@@ -28,7 +29,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   try {
     const porcentaje = await getPorcentajeById(id);
@@ -38,7 +39,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   const nPorcentaje = req.body.porcentajes;
   try {
@@ -49,7 +50,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   try {
     const deletePorcentaje = await deletePorcentaje(id);

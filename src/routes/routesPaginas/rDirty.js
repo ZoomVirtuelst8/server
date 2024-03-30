@@ -2,8 +2,9 @@ const { Router } = require("express");
 const router = Router();
 
 const { pdi, gdi } = require("../../controller/controllerPaginas/cDirty.js");
+const { verifyJWT } = require("../../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const codi = req.body.codi;
   try {
     const ncodi = await pdi(codi);
@@ -19,7 +20,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
   try {
     const codi = await gdi();
     if (codi[0]) {
