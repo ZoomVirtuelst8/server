@@ -2,7 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "Server Zoom Virtuel",
-  "main": "/src/index.js",
+  "main": "index.js",
   "scripts": {
     "start": "nodemon ./src/index.js"
   },
