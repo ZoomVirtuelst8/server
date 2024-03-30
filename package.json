@@ -2,9 +2,9 @@
   "name": "server",
   "version": "1.0.0",
   "description": "Server Zoom Virtuel",
-  "main": "index.js",
+  "main": "/src/index.js",
   "scripts": {
-    "start": "nodemon index.js "
+    "start": "nodemon ./src/index.js"
   },
   "author": "Wilson Sanchez",
   "license": "ISC",
