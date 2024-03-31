@@ -6,7 +6,12 @@
       "use": "@now/node"
     }
   ],
+  
   "routes": [
+    {
+      "src": "/api/nuevo-usuario",
+      "dest": "src/controller/controllerRegistros/cNuevoUserName.js"
+    },
     {
       "src": "/(.*)",
       "dest": "index.js"
