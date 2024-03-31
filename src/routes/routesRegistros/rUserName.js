@@ -2,13 +2,13 @@ const { Router } = require("express");
 const router = Router();
 
 const {
-postUserName,
-getAllUserName,
-getUserNameById,
-updateUserName,
-deleteUserName,
+  postUserName,
+  getAllUserName,
+  getUserNameById,
+  updateUserName,
+  deleteUserName,
 } = require("../../controller/controllerRegistros/cUserName.js");
-// asasfgdfgsdgh
+
 const { verifyJWT } = require("../../helper/jwtHelper.js");
 
 router.post("/", verifyJWT, async (req, res) => {
