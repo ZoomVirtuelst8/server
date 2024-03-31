@@ -1,13 +1,11 @@
 const { Router } = require("express");
 const router = Router();
 
-const {
-  postUserName,
+const { postUserName,
   getAllUserName,
   getUserNameById,
   updateUserName,
-  deleteUserName,
-} = require("../../controller/controllerRegistros/cNuevoUserName.js");
+  deleteUserName,} = require('../../controller/controllerRegistros/cNuevoUserName.js')
 
 const { verifyJWT } = require("../../helper/jwtHelper.js");
 
