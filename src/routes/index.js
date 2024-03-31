@@ -22,7 +22,7 @@ const rCompras = require("./routesRegistros/rCompras.js");
 const rVenta = require("./routesRegistros/rVentas.js");
 const rQuincena = require("./routesRegistros/rQuincena.js");
 const rComment = require("./routesRegistros/rComments.js");
-const rUserName = require("./routesRegistros/rUserName.js");
+// const rUserName = require("./routesRegistros/rUserName.js");
 const rMoneda = require("./routesRegistros/rMoneda.js");
 const rPorcentaje = require("./routesRegistros/rPorcentaje.js");
 const rUbicacion = require("./routesRegistros/rUbicacion.js");
@@ -56,7 +56,7 @@ const path = {
   ubicacion: `${pathRoot}/${pathAut}/ubicacion`,
   venta: `${pathRoot}/${pathAut}/venta`,
   relation: `${pathRoot}/${pathAut}/relation`,
-  username: `${pathRoot}/${pathAut}/username`,
+  // username: `${pathRoot}/${pathAut}/username`,
   rojo: `${pathRoot}/${pathAut}/rojo`,
   corte: `${pathRoot}/${pathAut}/corte`,
   amateur: `${pathRoot}/${pathAut}/amateur`,
@@ -96,7 +96,7 @@ router.use(path.ubicacion, rUbicacion);
 router.use(path.registro, rUser);
 router.use(path.venta, rVenta);
 router.use(path.relation, rRelationUbicationAndPorcentaje);
-router.use(path.username, rUserName);
+// router.use(path.username, rUserName);
 router.use(path.rojo, rRojo);
 
 router.use(path.corte, rAdultwork);
