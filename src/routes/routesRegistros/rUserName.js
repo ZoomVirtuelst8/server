@@ -63,7 +63,7 @@ router.delete("/delete/:id", verifyJWT, async (req, res) => {
     }
     return res.status(200).json(userName);
   } catch (error) {
-    return res.status(500).send({ error: "Error al eliminar el userName." });
+    return res.status(500).send({ error: "Error al eliminar el userNames." });
   }
 });
 
