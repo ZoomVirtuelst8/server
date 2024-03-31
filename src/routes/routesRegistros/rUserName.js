@@ -7,9 +7,9 @@ const {
   getUserNameById,
   updateUserName,
   deleteUserName,
-} = require("../../controller/controllerRegistros/cNuevoUserName.js");
+} = require("../../controller/controllerRegistros/cNuevoUserName");
 
-const { verifyJWT } = require("../../helper/jwtHelper.js");
+const { verifyJWT } = require("../../helper/jwtHelper");
 
 router.post("/", verifyJWT, async (req, res) => {
   const input = req.body;
