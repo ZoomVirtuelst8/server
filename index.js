@@ -3,7 +3,7 @@
 const PORT = 3001;
 const express = require("express");
 const { conn } = require("./src/db.js");
-const router = require("./src/routes/index.js");
+const router = require("./src/routes/routes.js");
 require("dotenv").config();
 const morgan = require("morgan");
 const cors = require("cors");
