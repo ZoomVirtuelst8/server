@@ -2,8 +2,7 @@ const { UserName, Paginas, User } = require("../db.js");
 
 const postUserName = async (userNames) => {
   try {
-    const createdUserNames = [];
-    for (const { user, pagina, userName } of userNames) {
+    const createdUserNames = await Promise.all(userNames.map(async ({ user, pagina, userName }) => {
       const newUser = await User.findByPk(user);
       if (!newUser) {
         throw new Error("Usuario no encontrado");
@@ -17,15 +16,43 @@ const postUserName = async (userNames) => {
       const newUserNameObj = await UserName.create({ userName });
       await newUserNameObj.setUseres(newUser);
       await newUserNameObj.setUserNames(paginaObj);
-      // newUserNameObj.pagina = paginaObj.nombrePagina;
-      // createdUserNames.push(newUserNameObj.dataValues.userName);
-    }
-    console.log(createdUserNames)
+
+      return newUserNameObj.dataValues.userName;
+    }));
+
+    console.log(createdUserNames);
     return createdUserNames;
   } catch (error) {
     throw new Error("Error: No se pudo registrar el userName");
   }
 };
+
+// const postUserName = async (userNames) => {
+//   try {
+//     const createdUserNames = [];
+//     for (const { user, pagina, userName } of userNames) {
+//       const newUser = await User.findByPk(user);
+//       if (!newUser) {
+//         throw new Error("Usuario no encontrado");
+//       }
+
+//       const paginaObj = await Paginas.findOne({ where: { id: pagina } });
+//       if (!paginaObj) {
+//         throw new Error("Página no encontrada");
+//       }
+
+//       const newUserNameObj = await UserName.create({ userName });
+//       await newUserNameObj.setUseres(newUser);
+//       await newUserNameObj.setUserNames(paginaObj);
+//       // newUserNameObj.pagina = paginaObj.nombrePagina;
+//       // createdUserNames.push(newUserNameObj.dataValues.userName);
+//     }
+//     console.log(createdUserNames)
+//     return createdUserNames;
+//   } catch (error) {
+//     throw new Error("Error: No se pudo registrar el userName");
+//   }
+// };
 
 // const postUserName = async (userNames) => {
 //   try {
