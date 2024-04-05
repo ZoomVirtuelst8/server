@@ -12,7 +12,7 @@ const { verifyJWT } = require("../helper/jwtHelper.js");
 
 router.post("/", verifyJWT, async (req, res) => {
   const venta = req.body;
-  console.log(venta);
+  // console.log(venta);
   try {
     const nVenta = await postVentas(venta);
     return res.status(200).json(nVenta);
