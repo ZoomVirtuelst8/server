@@ -1,37 +1,8 @@
 const jwt = require("jsonwebtoken");
 
-// const privateKeyPath = "./security/keys/private-key.pem";
-// const publicKeyPath = "./security/keys/public-key.pem";
-
-// function readPrivateKey(filePath) {
-//   try {
-//     if (fs.existsSync(filePath)) {
-//       return fs.readFileSync(filePath, "utf8");
-//     } else {
-//       console.error(`El archivo de clave privada no existe: ${filePath}`);
-//       process.exit(1);
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     process.exit(1);
-//   }
-// }
-
-// function loadedPrivateKey() {
-//   try {
-//     const privateKey = readPrivateKey(process.env.PRIVATEKEY);
-
-//     if (privateKey && typeof privateKey === "string") {
-//       return privateKey;
-//     } else {
-//       return null;
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
 
 function signJWT(payload) {
+
   try {
     const privateKey = process.env.PRIVATE_KEY;
     if (!privateKey) {

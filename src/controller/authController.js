@@ -2,8 +2,9 @@ const bcrypt = require("bcryptjs");
 const { User } = require("../db.js");
 const { signJWT } = require("../helper/jwtHelper.js");
 
-const logging = async ({ session, password }) => {
+const logging = async ( session, password ) => {
   try {
+    // console.log(session, password)
     const user = await User.findOne({
       where: { session: session },
       attributes: ["id", "nombre", "apellido", "session", "password", "admin"],

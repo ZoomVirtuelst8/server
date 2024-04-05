@@ -6,7 +6,8 @@ const { logging } = require("../controller/authController.js");
 router.post("/", async (req, res) => {
   const { session, password } = req.body;
   try {
-    const token = await logging({ session, password });
+    // console.log(session, password)
+    const token = await logging( session, password );
     if (token.error) {
       return res.status(404).json(token.error);
     }
