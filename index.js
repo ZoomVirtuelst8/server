@@ -6,7 +6,7 @@ const PORT = 3001;
 conn
   .sync({ force: false })
   .then(async () => {
-   await server.listen(PORT, () => {
+    server.listen(PORT || 3001, () => {
       console.log(`Server listening on port ${PORT}`);
     });
   })
