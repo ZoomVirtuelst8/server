@@ -2,30 +2,30 @@ const { UserName, Paginas, User } = require("../db.js");
 
 const postUserName = async (input) => {
   try {
-    // const { paginas, user, ...userName } = input;
+    const { paginas, user, ...userName } = input;
 
     const newUser = await User.findByPk(user);
     if (!newUser) {
       throw new Error("Usuario no encontrado");
     }
     const createdUserNames = [];
-    for (const paginaId in userName) {
-      if (userName.hasOwnProperty(paginaId)) {
-        const paginaName = userName[paginaId];
-        const pagina = await Paginas.findOne({ where: { id: paginaId } });
-        if (paginaName !== "") {
-          const newUserName = await UserName.create({ userName: paginaName });
-          await newUserName.setUseres(newUser);
-          await newUserName.setUserNames(pagina);
-          newUserName.pagina = pagina.nombrePagina;
-          createdUserNames.push(newUserName.dataValues.userName);
-        } else {
-          createdUserNames.push(
-            `${pagina.dataValues.nombrePagina} no tiene un user`
-          );
-        }
-      }
-    }
+    // for (const paginaId in userName) {
+    //   if (userName.hasOwnProperty(paginaId)) {
+    //     const paginaName = userName[paginaId];
+    //     const pagina = await Paginas.findOne({ where: { id: paginaId } });
+    //     if (paginaName !== "") {
+    //       const newUserName = await UserName.create({ userName: paginaName });
+    //       await newUserName.setUseres(newUser);
+    //       await newUserName.setUserNames(pagina);
+    //       newUserName.pagina = pagina.nombrePagina;
+    //       createdUserNames.push(newUserName.dataValues.userName);
+    //     } else {
+    //       createdUserNames.push(
+    //         `${pagina.dataValues.nombrePagina} no tiene un user`
+    //       );
+    //     }
+    //   }
+    // }
     return createdUserNames;
   } catch (error) {
     throw new Error("Error: No se pudo registrar el userName");
