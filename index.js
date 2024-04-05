@@ -22,7 +22,7 @@ server.use(morgan("dev"));
 server.use(helmet());
 
 server.use(router);
-
+// ni asi funciona
 conn
   .sync({ force: false })
   .then(async () => {
