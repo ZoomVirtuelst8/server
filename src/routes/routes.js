@@ -36,7 +36,7 @@ const rSearchProducto = require("./rSearchProducto.js");
 const rSearchUserByFortnight = require("./rSearchUserByFortnight.js");
 const rUbicacion = require("./rUbicacion.js");
 const rUser = require("./rUser.js");
-// const rUserName = require("./rUserName.js");
+const rUserName = require("./rUserName.js");
 const rVenta = require("./rVentas.js");
 
 const authRouter = require("./authRouter.js");
@@ -58,7 +58,7 @@ const path = {
   ubicacion: `${pathRoot}/${pathAut}/ubicacion`,
   venta: `${pathRoot}/${pathAut}/venta`,
   relation: `${pathRoot}/${pathAut}/relation`,
-  // username: `${pathRoot}/${pathAut}/username`,
+  username: `${pathRoot}/${pathAut}/username`,
   rojo: `${pathRoot}/${pathAut}/rojo`,
   corte: `${pathRoot}/${pathAut}/corte`,
   amateur: `${pathRoot}/${pathAut}/amateur`,
@@ -98,7 +98,7 @@ router.use(path.ubicacion, rUbicacion);
 router.use(path.registro, rUser);
 router.use(path.venta, rVenta);
 router.use(path.relation, rRelationUbicationAndPorcentaje);
-// router.use(path.username, rUserName);
+router.use(path.username, rUserName);
 router.use(path.rojo, rRojo);
 
 router.use(path.corte, rAdultwork);
