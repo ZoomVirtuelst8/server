@@ -7,7 +7,7 @@ const {
   getUserNameById,
   updateUserName,
   deleteUserName,
-} = require("../controller/cNuevoUserName.js");
+} = require("../controller/cUsername.js");
 
 const { verifyJWT } = require("../helper/jwtHelper.js");
 
