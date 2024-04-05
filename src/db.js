@@ -138,7 +138,7 @@ Bonga.belongsTo(Quincena, { as: "q_bonga", foreignKey: "quincena" });
 UserName.hasMany(Bonga, { as: "corte_bonga", foreignKey: "userNameId" });
 Bonga.belongsTo(UserName, { as: "corte_bonga", foreignKey: "userNameId" });
 
-//? ********************// C A M 4 \\  ********************
+//? ********************// C A M 4 \\  *******************
 //? relation of fortnight and cam4
 Quincena.hasMany(Cam4, { as: "q_cam4", foreignKey: "quincena" });
 Cam4.belongsTo(Quincena, { as: "q_cam4", foreignKey: "quincena" });
