@@ -2,7 +2,7 @@ const { Router } = require("express");
 const router = Router();
 
 const {
-  // postUserName,
+  postUserName,
   getAllUserName,
   getUserNameById,
   updateUserName,
@@ -11,18 +11,18 @@ const {
 
 const { verifyJWT } = require("../helper/jwtHelper.js");
 
-// router.post("/", verifyJWT, async (req, res) => {
-//   const input = req.body;
-//   try {
-//     const nUserName = await postUserName(input);
-//     if (nUserName?.Error) {
-//       return res.status(404).json(nUserName);
-//     }
-//     return res.status(200).json(nUserName);
-//   } catch (error) {
-//     return res.status(500).send(error.message);
-//   }
-// });
+router.post("/", verifyJWT, async (req, res) => {
+  const input = req.body;
+  try {
+    const nUserName = await postUserName(input);
+    if (nUserName?.Error) {
+      return res.status(404).json(nUserName);
+    }
+    return res.status(200).json(nUserName);
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+});
 
 router.get("/", verifyJWT, async (req, res) => {
   try {
