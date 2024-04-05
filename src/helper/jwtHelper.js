@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 function signJWT(payload) {
 
   try {
-    const privateKey = process.env.PRIVATE_KEY;
+    const privateKey = process.env.PRIVATE_KEY.replace(/\\n/g, '\n');
     if (!privateKey) {
       throw new Error("La clave privada no está definida en las variables de entorno.");
     }
@@ -21,7 +21,7 @@ function signJWT(payload) {
 function verifyJWT(req, res, next) {
     try {
       const token = req.headers.authorization;
-      const publicKey = process.env.PUBLIC_KEY;
+      const publicKey = process.env.PUBLIC_KEY.replace(/\\n/g, '\n');
     const verified = jwt.verify(token, publicKey, { algorithms: ["RS256"] });
     req.user =  verified;
     next()
