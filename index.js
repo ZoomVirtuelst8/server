@@ -10,7 +10,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const server = express();
 const corsConfig = {
-  origin: process.env.FRONT_URL,
+  origin: "*",
   credential: true, // Habilita el envío de cookies y encabezados de autenticación
   methods: ["GET", "POST", "PUT", "DELETE"],
 };
