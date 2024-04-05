@@ -1,28 +1,7 @@
-// const axios = require("axios");
-// const server = require("./src/server.js");
-const PORT = 3001;
-const express = require("express");
+const server = require("./src/server.js");
 const { conn } = require("./src/db.js");
-const router = require("./src/routes/routes.js");
-require("dotenv").config();
-const morgan = require("morgan");
-const cors = require("cors");
-const helmet = require("helmet");
-const server = express();
-const corsConfig = {
-  origin: "*",
-  credential: true, // Habilita el envío de cookies y encabezados de autenticación
-  methods: ["GET", "POST", "PUT", "DELETE"],
-};
+const PORT = 3001;
 
-server.use(cors(corsConfig));
-server.options("", cors(corsConfig));
-server.use(express.json());
-server.use(morgan("dev"));
-server.use(helmet());
-
-server.use(router);
-// ni asi funciona
 conn
   .sync({ force: false })
   .then(async () => {
