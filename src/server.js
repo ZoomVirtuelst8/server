@@ -10,10 +10,8 @@ const corsConfig = {
   credential: true, // Habilita el envío de cookies y encabezados de autenticación
   methods: ["GET", "POST", "PUT", "DELETE"],
 };
-server.use(
-  cors(corsConfig)
-);
-
+server.use(cors(corsConfig));
+server.options("", cors(corsConfig));
 server.use(express.json());
 server.use(morgan("dev"));
 server.use(helmet());
