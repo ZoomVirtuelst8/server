@@ -23,7 +23,7 @@ const sequelize = new Sequelize(POSTGRES_URL, {
   native: false,
   dialectOptions: {
     dialectModule: require('pg'),
-    ssl: false, // Deshabilitar la conexión SSL/TLS
+    ssl: true, // Deshabilitar la conexión SSL/TLS
   },
 });
 
