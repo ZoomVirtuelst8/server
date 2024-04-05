@@ -11,20 +11,21 @@ const {
 
 const { verifyJWT } = require("../helper/jwtHelper.js");
 
-router.post("/", verifyJWT, async (req, res) => {
+router.post("/", async (req, res) => {
   const input = req.body;
   try {
     const nUserName = await postUserName(input);
-    if (nUserName?.Error) {
-      return res.status(404).json(nUserName);
+    const newUserNames = nUserName[0]
+    if (newUserNames?.Error) {
+      return res.status(404).json(newUserNames);
     }
-    return res.status(200).json(nUserName);
+    return res.status(200).json(newUserNames);
   } catch (error) {
     return res.status(500).send(error.message);
   }
 });
 
-router.get("/", verifyJWT, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const allUserName = await getAllUserName();
     return res.status(200).json(allUserName);

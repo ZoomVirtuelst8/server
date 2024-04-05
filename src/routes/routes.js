@@ -58,7 +58,7 @@ const path = {
   ubicacion: `${pathRoot}/${pathAut}/ubicacion`,
   venta: `${pathRoot}/${pathAut}/venta`,
   relation: `${pathRoot}/${pathAut}/relation`,
-  username: `${pathRoot}/${pathAut}/username`,
+  username: `/username`,
   rojo: `${pathRoot}/${pathAut}/rojo`,
   corte: `${pathRoot}/${pathAut}/corte`,
   amateur: `${pathRoot}/${pathAut}/amateur`,
