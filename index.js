@@ -24,7 +24,7 @@ server.use(helmet());
 server.use(router);
 // ni asi funciona
 conn
-  .sync({ force: false })
+  // .sync({ force: false })
   .then(async () => {
     server.listen(PORT || 3001, () => {
       console.log(`Server listening on port ${PORT}`);
