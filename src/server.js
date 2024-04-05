@@ -1,6 +1,6 @@
 const express = require("express");
 require("dotenv").config();
-const router = require("./routes/index.js");
+const router = require("./routes/routes.js");
 const morgan = require("morgan");
 const cors = require("cors");
 const helmet = require("helmet");
