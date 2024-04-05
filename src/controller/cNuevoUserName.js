@@ -17,8 +17,8 @@ const postUserName = async (userNames) => {
       const newUserNameObj = await UserName.create({ userName });
       await newUserNameObj.setUseres(newUser);
       await newUserNameObj.setUserNames(paginaObj);
-      newUserNameObj.pagina = paginaObj.nombrePagina;
-      createdUserNames.push(newUserNameObj.dataValues.userName);
+      // newUserNameObj.pagina = paginaObj.nombrePagina;
+      // createdUserNames.push(newUserNameObj.dataValues.userName);
     }
     console.log(createdUserNames)
     return createdUserNames;
