@@ -12,9 +12,9 @@ const {
 const { verifyJWT } = require("../helper/jwtHelper.js");
 
 router.post("/", verifyJWT, async (req, res) => {
-  const input = req.body;
+  const userNames = req.body;
   try {
-    const nUserName = await postUserName(input);
+    const nUserName = await postUserName(userNames);
     const newUserNames = nUserName[0]
     if (newUserNames?.Error) {
       return res.status(404).json(newUserNames);
