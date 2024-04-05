@@ -83,7 +83,7 @@ const deleteUserName = async (id) => {
 };
 
 module.exports = {
-  postUserName,
+  // postUserName,
   getAllUserName,
   getUserNameById,
   updateUserName,
