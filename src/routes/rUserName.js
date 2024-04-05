@@ -11,7 +11,7 @@ const {
 
 const { verifyJWT } = require("../helper/jwtHelper.js");
 
-router.post("/", async (req, res) => {
+router.post("/", verifyJWT, async (req, res) => {
   const input = req.body;
   try {
     const nUserName = await postUserName(input);
@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
   try {
     const allUserName = await getAllUserName();
     return res.status(200).json(allUserName);
