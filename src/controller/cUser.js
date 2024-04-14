@@ -192,10 +192,14 @@ const updateUser = async (id, editUser) => {
     if (!nUser) {
       return { error: "no se encontro el usuario." };
     }
+    const salt = await bcrypt.genSalt(10); // Ajusta el número de rondas si es necesario
+    const hashPassword = await bcrypt.hash(editUser.password, salt);
     await User.update(
       {
         nombre: editUser.nombre,
         apellido: editUser.apellido,
+        session: editUser.session,
+        password: hashPassword,
         direccion: editUser.direccion,
         telefono: editUser.telefono,
         whatsapp: editUser.whatsapp,
@@ -222,6 +226,7 @@ const updateUser = async (id, editUser) => {
     const updateUser = await User.findByPk(id);
     return updateUser;
   } catch (error) {
+    console.log(error)
     throw new Error("Error no pudimos actualizar el usuario.");
   }
 };

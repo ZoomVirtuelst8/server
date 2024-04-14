@@ -85,6 +85,7 @@ router.get("/:id", verifyJWT, async (req, res) => {
     return res.status(500).send(error.message);
   }
 });
+
 router.get("/check/:id", verifyJWT, async (req, res) => {
   try {
     const { id } = req.params;
@@ -102,6 +103,7 @@ router.get("/check/:id", verifyJWT, async (req, res) => {
 router.put("/:id", verifyJWT, async (req, res) => {
   const { id } = req.params;
   const editUser = req.body;
+  console.log(id, editUser)
   try {
     const nUser = await updateUser(id, editUser);
     return res.status(200).json(nUser);
