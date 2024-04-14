@@ -192,37 +192,54 @@ const updateUser = async (id, editUser) => {
     if (!nUser) {
       return { error: "no se encontro el usuario." };
     }
-    const salt = await bcrypt.genSalt(10); // Ajusta el número de rondas si es necesario
-    const hashPassword = await bcrypt.hash(editUser.password, salt);
-    await User.update(
-      {
-        nombre: editUser.nombre,
-        apellido: editUser.apellido,
-        session: editUser.session,
-        password: hashPassword,
-        direccion: editUser.direccion,
-        telefono: editUser.telefono,
-        whatsapp: editUser.whatsapp,
-        admin: editUser.admin,
-      },
-      { where: { id } }
-    );
+    if (editUser.password) {
+      const salt = await bcrypt.genSalt(10); // Ajusta el número de rondas si es necesario
+      const hashPassword = await bcrypt.hash(editUser.password, salt);
+      await User.update(
+        {
+          nombre: editUser.nombre,
+          apellido: editUser.apellido,
+          session: editUser.session,
+          password: hashPassword,
+          direccion: editUser.direccion,
+          telefono: editUser.telefono,
+          whatsapp: editUser.whatsapp,
+          admin: editUser.admin,
+        },
+        { where: { id } }
+      );
+    }else {
+      await User.update(
+        {
+          nombre: editUser.nombre,
+          apellido: editUser.apellido,
+          session: editUser.session,
+          direccion: editUser.direccion,
+          telefono: editUser.telefono,
+          whatsapp: editUser.whatsapp,
+          admin: editUser.admin,
+        },
+        { where: { id } }
+      );
+    }
     const rUser = await User.findByPk(id);
     if (!rUser) {
       throw Error("Usuario no encontrado");
     }
-    const rUbicacion = await Ubicacion.findByPk(editUser.ubicacion);
-    if (!rUbicacion) {
-      throw Error("Ubicacion no encontrada");
+    if (editUser.porcentaje) {
+      const rPorcentaje = await Porcentaje.findByPk(editUser.porcentaje);
+      if (!rPorcentaje) {
+        throw Error("Porcentaje no encontrado");
+      }
+      await rUser.setP_porcentaje(rPorcentaje);
     }
-    const rPorcentaje = await Porcentaje.findByPk(editUser.porcentaje);
-    if (!rPorcentaje) {
-      throw Error("Porcentaje no encontrado");
+    if (editUser.ubicacion) {
+      const rUbicacion = await Ubicacion.findByPk(editUser.ubicacion);
+      if (!rUbicacion) {
+        throw Error("Ubicacion no encontrada");
+      }
+      await rUser.setP_ubicacion(rUbicacion);
     }
-
-    await rUser.setP_porcentaje(rPorcentaje);
-    await rUser.setP_ubicacion(rUbicacion);
-
     const updateUser = await User.findByPk(id);
     return updateUser;
   } catch (error) {
